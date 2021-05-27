@@ -6,7 +6,7 @@ Type in encoded, get out message
 
 """
 
-import readchar # type: ignore
+import readchar  # type: ignore
 
 from .enigma_machine import Enigma
 
@@ -14,19 +14,20 @@ from .enigma_machine import Enigma
 def main() -> None:
     """ main """
 
-    e = Enigma()
+    #e = Enigma(["I","II","III","IV"], "CT")
+    e = Enigma(["I"], "CT")
 
     while True:
         char = readchar.readchar()
+        #alpha characters
+        if char.isalpha():
+            print(e.encode(char.upper()), end="", flush=True)
         # Handle traps
-        if char in ("\x03", "\x04", "\x1a"):
+        elif char in ("\x03", "\x04", "\x1a"):
             return
         # Handle newline
         elif char in ("\x0a", "\x0d"):
             print(char, flush=True)
-        # Encode
-        else:
-            print(e.encode(char), end="", flush=True)
 
 
 if __name__ == "__main__":
